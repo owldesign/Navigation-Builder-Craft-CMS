@@ -1,0 +1,9 @@
+// SVGs
+svg.icon {
+  @include size(15px);
+}
+
+// Layout
+.padded > .pane {
+	padding: 0;
+}

@@ -1,0 +1,47 @@
+/* ============================================ *
+ * Name: Navigation Builder
+ * Description: Navigation Builder for Craft CMS
+ * Category: Craft CMS PLugins
+ * Technologies: HTML5, CSS3, jQuery, Coffeescript, SCSS
+ * Version: 1.0.0
+ * Author: Vadim Goncharov (@owldesign)
+ * Date: 1.22.16
+ * ============================================ */
+svg.icon {
+  height: 15px;
+  width: 15px; }
+
+.padded > .pane {
+  padding: 0; }
+
+.navbuilder .nav-list thead tr:hover {
+  background: white; }
+.navbuilder .nav-list th {
+  padding: 20px; }
+.navbuilder .nav-list tr {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease; }
+  .navbuilder .nav-list tr:hover {
+    background: #fafafa; }
+  .navbuilder .nav-list tr td {
+    padding: 12px 20px; }
+    .navbuilder .nav-list tr td.name a, .navbuilder .nav-list tr td.handle, .navbuilder .nav-list tr td.count {
+      color: #333f4d; }
+    .navbuilder .nav-list tr td.handle {
+      font-weight: 400; }
+    .navbuilder .nav-list tr td.name a {
+      color: #47c5ca;
+      text-decoration: none; }
+      .navbuilder .nav-list tr td.name a:hover {
+        color: #333f4d; }
+    .navbuilder .nav-list tr td.action svg {
+      cursor: pointer;
+      margin-right: 4px; }
+      .navbuilder .nav-list tr td.action svg * {
+        fill: #333f4d;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        transition: all 0.3s ease; }
+      .navbuilder .nav-list tr td.action svg:hover * {
+        fill: #47c5ca; }

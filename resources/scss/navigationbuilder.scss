@@ -1,0 +1,19 @@
+/* ============================================ *
+ * Name: Navigation Builder
+ * Description: Navigation Builder for Craft CMS
+ * Category: Craft CMS PLugins
+ * Technologies: HTML5, CSS3, jQuery, Coffeescript, SCSS
+ * Version: 1.0.0
+ * Author: Vadim Goncharov (@owldesign)
+ * Date: 1.22.16
+ * ============================================ */
+
+// 3rd Party Libraries
+@import "lib/bourbon/bourbon"; // Mixins, functions, etc https://github.com/thoughtbot/bourbon
+
+// Variables
+@import "variables"; // Variables, mixins, settings, etc
+
+// Pages
+@import "pages/global"; // Global styles
+@import "pages/navigations"; // Navigations Page

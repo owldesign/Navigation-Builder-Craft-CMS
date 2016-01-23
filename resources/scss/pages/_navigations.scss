@@ -1,0 +1,41 @@
+.navbuilder {
+
+  .nav-list {
+    thead tr:hover { background: white; }
+    th {
+      padding: 20px;
+    }
+    tr {
+      @include transition(all .3s ease);
+      &:hover {
+        background: darken(white, 2);
+      }
+      td {
+        padding: 12px 20px;
+        &.name a, &.handle, &.count {
+          color: $c-blue;
+        }
+        &.handle {
+          font-weight: 400;
+        }
+        &.name a {
+          color: $c-teal;
+          text-decoration: none;
+          &:hover { color: $c-blue; }
+        }
+        &.action {
+          svg {
+            cursor: pointer;
+            margin-right: 4px;
+            * { fill: $c-blue; @include transition(all .3s ease); }
+            &:hover {
+              * { fill: $c-teal; }
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+}

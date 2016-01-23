@@ -1,0 +1,85 @@
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% set bodyClass = 'navigationbuilder nb-edit' %}
+{% set pageSlug = craft.request.lastSegment %}
+
+{% if pageSlug == 'edit' %}
+  {% set page = 'Edit Navigation' %}
+{% else %}
+  {% set page = 'New Navigation' %}
+{% endif %}
+
+{% block pageHeader %}
+  {% include 'navigationbuilder/partials/header' %}
+  {{ parent() }}
+  <div id="extra-headers"><div class="buttons right"><div class="btngroup"><a href="{{ url('navigationbuilder/navigation/new') }}" class="btn submit add icon"><span>{{ "Create New Navigation"|t }}</span></a></div></div></div>
+{% endblock %}
+
+{% block content %}
+	
+<section class="pane">
+  <form method="post" accept-charset="UTF-8">
+    <input type="hidden" name="action" value="navigationBuilder/navigation/saveNavigation">
+    <input type="hidden" name="redirect" value="navigationbuilder">
+
+    {% if navigation.id %}<input type="hidden" name="navigationId" value="{{ navigation.id }}">{% endif %}
+		
+		{{ forms.textField({
+		  first: true,
+		  label: "Navigation Name"|t,
+		  instructions: "Give this navigation a name"|t,
+		  id: 'name',
+		  name: 'name',
+		  value: navigation.name,
+		  errors: navigation.getErrors('name'),
+		  autofocus: true,
+		  required: true,
+		  size: 50,
+		  translatable: true
+		}) }}
+
+		{{ forms.textField({
+		  label: "Handle"|t,
+		  instructions: "Navigation field handle name, must be unique"|t,
+		  id: 'handle',
+		  class: 'code',
+		  name: 'handle',
+		  value: navigation.handle,
+		  size: 50,
+		  errors: navigation.getErrors('handle'),
+		  required: true
+		}) }}
+
+		{% includeCssResource "lib/redactor/redactor.css" %}
+		{% includeJsResource "lib/redactor/redactor.js" %}
+		{{ forms.textareaField({
+		  label: "Description"|t,
+		  instructions: "Short description about your navigation"|t,
+		  id: 'description',
+		  class: 'description',
+		  name: 'description',
+		  value: (navigation.description is defined ? navigation.description : null),
+		  errors: navigation.getErrors('description'),
+		  required: false
+		}) }}
+
+		{# Errors #}
+		{%- set errors = (errors is defined ? errors : null) -%}
+		{% if errors %}
+		  {% include "_includes/forms/errorList" with { errors: errors } %}
+		{% endif %}
+
+		<div class="buttons">
+		  <input type="submit" class="btn submit" value="{{ 'Save Navigation'|t }}">
+		</div>
+
+	</form>
+</section>
+
+{% set newFormJs %}
+  {% if not navigation.handle %}new Craft.HandleGenerator('#name', '#handle');{% endif %}
+  $('#description').redactor();
+{% endset %}
+{% includeJs newFormJs %}
+{% endblock %}

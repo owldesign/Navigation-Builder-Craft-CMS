@@ -1,0 +1,59 @@
+{% extends "_layouts/cp" %}
+
+{% set bodyClass = 'navbuilder' %}
+{% set title = pageTitle %}
+
+{% block pageHeader %}
+  {% include 'navigationbuilder/partials/header' %}
+  {{ parent() }}
+  <div id="extra-headers"><div class="buttons right"><div class="btngroup"><a href="{{ url('navigationbuilder/navigation/new') }}" class="btn submit add icon"><span>{{ "Create New Navigation"|t }}</span></a></div></div></div>
+{% endblock %}
+
+{% block content %}
+<seciton class="nav-list">
+	{% if navigations|length %}
+	<table class="data fullwidth" id="navigations-list">
+	  <thead>
+	    <tr>
+	      <th scope="col">{{ "Name"|t }}</th>
+	      <th scope="col">{{ "Handle"|t }}</th>
+	      <th scope="col">{{ "Description"|t }}</th>
+	      <th scope="col">{{ "Action"|t }}</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	  	{% for navigation in navigations %}
+	    <tr data-id="{{ navigation.id }}" data-name="{{ navigation.name }}">
+	      <td data-title="{{ "Name"|t }}" class="name"><a href="{{ url('navigationbuilder/navigation/' ~ navigation.id ~ '/edit') }}">{{ navigation.name }}</a></td>
+	      <td data-title="{{ "Handle"|t }}" class="handle"><code>{{ navigation.handle }}</code></td>
+	      <td data-title="{{ "Description"|t }}" class="description">{{ navigation.description |raw }}</td>
+	      <td data-title="{{ "Action"|t }}" class="action">
+	        <span data-tooltip="Copy {{ navigation.handle }}"><svg class="icon copy" data-clipboard-text="{{ navigation.handle }}"><use xlink:href="#icon-copy" class="icon-copy"/></svg></span>
+	        <a href="#" class="delete-navigation delete" title="{{ navigation.name }}" role="button" data-tooltip="Delete {{ navigation.name }}">
+	          <svg class="icon"><use xlink:href="#icon-trash" class="icon-trash"/></svg>
+	        </a>
+	      </td>
+	    </tr>
+	  	{% endfor %}
+	  </tbody>
+	</table>
+	{% else %}
+	<div class="pane" id="nonavigations">
+		<p>You don't have any navigations, please make some</p>
+	</div>
+	{% endif %}
+</section>
+
+{% endblock %}
+
+{% set js %}
+  var adminTable = new Craft.AdminTable({
+    tableSelector: '#navigations-list',
+    noObjectsSelector: '#nonavigations',
+    newObjectBtnSelector: '#newnavigationcontainer',
+    deleteAction: 'navigationBuilder/navigation/deleteNavigation',
+    confirmDeleteMessage: '{{ "Are you sure you want to delete “{name}”?"|t }}'
+  });
+{% endset %}
+{% includeJs js %}
