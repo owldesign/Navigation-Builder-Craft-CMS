@@ -10,9 +10,9 @@
 {% endblock %}
 
 {% block content %}
-<seciton class="nav-list">
+<section class="nav-list">
 	{% if navigations|length %}
-	<table class="data fullwidth" id="navigations-list">
+	<table class="data fullwidth" id="navigations-list" data-max-levels="3">
 	  <thead>
 	    <tr>
 	      <th scope="col">{{ "Name"|t }}</th>
@@ -24,7 +24,7 @@
 
 	  <tbody>
 	  	{% for navigation in navigations %}
-	    <tr data-id="{{ navigation.id }}" data-name="{{ navigation.name }}">
+	    <tr data-id="{{ navigation.id }}" data-name="{{ navigation.name }}" class="table-rows">
 	      <td data-title="{{ "Name"|t }}" class="name"><a href="{{ url('navigationbuilder/navigation/' ~ navigation.id ~ '/edit') }}">{{ navigation.name }}</a></td>
 	      <td data-title="{{ "Handle"|t }}" class="handle"><code>{{ navigation.handle }}</code></td>
 	      <td data-title="{{ "Description"|t }}" class="description">{{ navigation.description |raw }}</td>
@@ -37,6 +37,9 @@
 	    </tr>
 	  	{% endfor %}
 	  </tbody>
+	  <tfoot class="move">
+	  	<tr><td></td></tr>
+	  </tfoot>
 	</table>
 	{% else %}
 	<div class="pane" id="nonavigations">

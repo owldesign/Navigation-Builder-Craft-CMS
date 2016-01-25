@@ -24,11 +24,10 @@ class NavigationBuilderController extends BaseController
 
 
 
-	public function actionNavigations()
+	public function actionIndex()
 	{
-		$variables['pageTitle'] = Craft::t('Navigations');
-
-		$this->renderTemplate('navigationbuilder/navigation/index', $variables);
+		$variables['navigations'] = craft()->navigationBuilder_navigation->getAllNavigations();
+		$this->renderTemplate('navigationbuilder/navnodes/index', $variables);
 	}
 
 

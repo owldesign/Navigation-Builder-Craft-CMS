@@ -1,0 +1,34 @@
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% set bodyClass = 'navigationbuilder nb-edit' %}
+{% set pageSlug = craft.request.lastSegment %}
+
+{% if pageSlug == 'edit' %}
+  {% set page = 'Edit Builder' %}
+{% else %}
+  {% set page = 'New Builder' %}
+{% endif %}
+
+{% block pageHeader %}
+  {% include 'navigationbuilder/partials/header' %}
+  {{ parent() }}
+  {# <div id="extra-headers"><div class="buttons right"><div class="btngroup"><a href="{{ url('navigationbuilder/navigation/new') }}" class="btn submit add icon"><span>{{ "Create New Navigation"|t }}</span></a></div></div></div> #}
+{% endblock %}
+
+{% block main %}
+
+<section class="grid" data-max-cols="3">
+	
+	<div class="item first" data-position="left" data-colspan="2">
+		<div class="pane">hi there</div>
+	</div>
+
+	<div class="item last" data-position="right" data-colspan="1">
+		<div class="pane">
+			<button class="btn">Add New Item</button>
+		</div>
+	</div>
+
+</section>
+{% endblock %}

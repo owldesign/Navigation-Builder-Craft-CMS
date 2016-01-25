@@ -1,26 +1,26 @@
-var App,
-  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-App = (function() {
-  function App() {
-    this.init = bind(this.init, this);
-  }
-
-  App.prototype.init = function() {
-    var $notificationContainer, clipboard;
-    $notificationContainer = $('#notifications');
-    clipboard = new Clipboard('.copy');
-    return clipboard.on('success', function(e) {
-      return e.clearSelection();
-    });
-  };
-
-  return App;
-
+(function() {
+  var $container, foo;
+  $('.btn').on('click', function(e) {
+    var $div, myModal;
+    $div = $('<div class="modal">...</div>');
+    return myModal = new Garnish.Modal($div);
+  });
+  $container = $('.body');
+  Craft.FooBar = Garnish.Base.extend({
+    sorter: null,
+    init: function() {
+      var $table;
+      $table = $('#navigations-list tr');
+      return this.sorter = new Craft.DataTableSorter($table, {
+        helperClass: 'editabletablesorthelper',
+        copyDraggeeInputValuesToHelper: true
+      });
+    },
+    addRow: function() {
+      var $tr;
+      $tr = $('<tr/>');
+      return this.sorter.addItems($tr);
+    }
+  });
+  return foo = new Craft.FooBar;
 })();
-
-$(document).ready(function() {
-  var app;
-  app = new App();
-  return app.init();
-});

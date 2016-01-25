@@ -48,6 +48,10 @@ class NavigationBuilderPlugin extends BasePlugin
   {
     return array(
       'navigationbuilder' 																						=> array('action' => 'navigationBuilder/navigation/navigationsIndex'),
+      // 'navigationbuilder/navnode'                        							=> array('action' => 'navigationBuilder/index'),
+      'navigationbuilder/builder/new'                        					=> array('action' => 'navigationBuilder/builder/createEditBuilder'),
+      'navigationbuilder/builder/(?P<navigationId>\d+)'               => array('action' => 'navigationBuilder/builder/createEditBuilder'),
+      'navigationbuilder/builder/(?P<navigationId>\d+)/edit'          => array('action' => 'navigationBuilder/builder/createEditBuilder'),
       'navigationbuilder/navigation'                        					=> array('action' => 'navigationBuilder/navigation/navigationsIndex'),
       'navigationbuilder/navigation/new'                        			=> array('action' => 'navigationBuilder/navigation/createEditNavigation'),
       'navigationbuilder/navigation/(?P<navigationId>\d+)'            => array('action' => 'navigationBuilder/navigation/createEditNavigation'),
