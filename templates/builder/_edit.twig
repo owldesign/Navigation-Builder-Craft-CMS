@@ -21,12 +21,18 @@
 <section class="grid" data-max-cols="3">
 	
 	<div class="item first" data-position="left" data-colspan="2">
-		<div class="pane">hi there</div>
+		<div class="pane">
+			<p>Navigation ID: {{ navigationId }}</p>
+
+			<div id="node-container">
+				<p>Test Node</p>
+			</div>
+		</div>
 	</div>
 
 	<div class="item last" data-position="right" data-colspan="1">
 		<div class="pane">
-			<button class="btn">Add New Item</button>
+			<button class="btn addNewNode">Add New Item</button>
 		</div>
 	</div>
 

@@ -20,4 +20,5 @@ return array(
   'Navigation saved' => 'Navigation saved',
   'Could not save navigation' => 'Could not save navigation',
   'Are you sure you want to delete “{name}”?' => 'Are you sure you want to delete “{name}”?',
+  'Invalid Navigation' => 'Invalid Navigation',
 );

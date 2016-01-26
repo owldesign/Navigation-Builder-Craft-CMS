@@ -33,6 +33,9 @@
 	        <a href="#" class="delete-navigation delete" title="{{ navigation.name }}" role="button" data-tooltip="Delete {{ navigation.name }}">
 	          <svg class="icon"><use xlink:href="#icon-trash" class="icon-trash"/></svg>
 	        </a>
+	        <a href="{{ url('navigationbuilder/builder/' ~ navigation.id ~'/edit') }}" class="build-navigation build" title="{{ navigation.name }}" role="button" data-tooltip="Build {{ navigation.name }}">
+	          <svg class="icon"><use xlink:href="#icon-pencil" class="icon-pencil"/></svg>
+	        </a>
 	      </td>
 	    </tr>
 	  	{% endfor %}

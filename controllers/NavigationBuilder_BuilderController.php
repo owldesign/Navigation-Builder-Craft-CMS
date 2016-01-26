@@ -12,6 +12,14 @@ class NavigationBuilder_BuilderController extends BaseController
 	 */
 	public function actionCreateEditBuilder(array $variables = array())
 	{
+		if (!empty($variables['navigationId'])) {
+			$navigationId = $variables['navigationId'];
+		} else {
+			craft()->userSession->setError(Craft::t('Invalid Navigation'));
+		}
+
+
+		
 		$variables['title'] = 'Navigation Builder';
 		$variables['crumbs'] = array(
 			array('label' => Craft::t('Navigation Builder'), 'url' => UrlHelper::getUrl('navigationbuilder')),

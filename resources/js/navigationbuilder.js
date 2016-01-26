@@ -1,26 +1,31 @@
 (function() {
-  var $container, foo;
-  $('.btn').on('click', function(e) {
-    var $div, myModal;
-    $div = $('<div class="modal">...</div>');
-    return myModal = new Garnish.Modal($div);
+  var $body, $buttons, $form, $formWrapper, $modalContainer, $navNodeName, $submitNavNode;
+  $form = $('<form id="newNodeModalBox" class="modal fitted"/>');
+  $body = $('<div class="body"/>').appendTo($form);
+  $modalContainer = $('<div class="modal-container"/>').appendTo($body);
+  $buttons = $('<div class="buttons"/>').appendTo($modalContainer);
+  $formWrapper = $('<div class="formwrapper"/>').appendTo($modalContainer);
+  $navNodeName = $('<input type="text" id="navNodeName" class="text fullwidth" placeholder="' + Craft.t('Node Name') + '"/>').appendTo($formWrapper);
+  $submitNavNode = $('<input type="submit" class="btn submit disabled" value="' + Craft.t('Create New Nav Node') + '" />').appendTo($formWrapper);
+  return $('.addNewNode').on('click', function(e) {
+    var newNodeModal;
+    e.preventDefault();
+    return newNodeModal = new Garnish.Modal($form, {
+      autoShow: true,
+      closeOtherModals: false,
+      hideOnEsc: false,
+      hideOnShadeClick: false,
+      shadeClass: 'modal-shade dark',
+      onFadeIn: function() {
+        if (!Garnish.isMobileBrowser(true)) {
+          return setTimeout((function() {
+            return $navNodeName.focus();
+          }), 100);
+        }
+      },
+      onFadeOut: function() {
+        return $navNodeName.val('');
+      }
+    });
   });
-  $container = $('.body');
-  Craft.FooBar = Garnish.Base.extend({
-    sorter: null,
-    init: function() {
-      var $table;
-      $table = $('#navigations-list tr');
-      return this.sorter = new Craft.DataTableSorter($table, {
-        helperClass: 'editabletablesorthelper',
-        copyDraggeeInputValuesToHelper: true
-      });
-    },
-    addRow: function() {
-      var $tr;
-      $tr = $('<tr/>');
-      return this.sorter.addItems($tr);
-    }
-  });
-  return foo = new Craft.FooBar;
 })();
