@@ -6,26 +6,14 @@
   $buttons = $('<div class="buttons"/>').appendTo($modalContainer);
   $formWrapper = $('<div class="formwrapper"/>').appendTo($modalContainer);
   $navNodeName = $('<input type="text" id="navNodeName" class="text fullwidth" placeholder="' + Craft.t('Node Name') + '"/>').appendTo($formWrapper);
-  $submitNavNode = $('<input type="submit" class="btn submit disabled" value="' + Craft.t('Create New Nav Node') + '" />').appendTo($formWrapper);
+  $submitNavNode = $('<input type="submit" class="btn submit" value="' + Craft.t('Create New Nav Node') + '" />').appendTo($formWrapper);
   return $('.addNewNode').on('click', function(e) {
     var newNodeModal;
     e.preventDefault();
-    return newNodeModal = new Garnish.Modal($form, {
-      autoShow: true,
-      closeOtherModals: false,
-      hideOnEsc: false,
-      hideOnShadeClick: false,
-      shadeClass: 'modal-shade dark',
-      onFadeIn: function() {
-        if (!Garnish.isMobileBrowser(true)) {
-          return setTimeout((function() {
-            return $navNodeName.focus();
-          }), 100);
-        }
-      },
-      onFadeOut: function() {
-        return $navNodeName.val('');
-      }
+    newNodeModal = new Garnish.Modal($form);
+    return $('newNodeModalBox').submit(function() {
+      preventDefault();
+      return console.log('form submited');
     });
   });
 })();
