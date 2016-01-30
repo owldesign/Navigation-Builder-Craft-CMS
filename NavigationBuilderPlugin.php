@@ -48,12 +48,15 @@ class NavigationBuilderPlugin extends BasePlugin
   {
     return array(
       'navigationbuilder' 																						=> array('action' => 'navigationBuilder/navigation/navigationsIndex'),
-      // 'navigationbuilder/navnode'                        							=> array('action' => 'navigationBuilder/index'),
-      // 'navigationbuilder/builder/new'                        					=> array('action' => 'navigationBuilder/builder/createEditBuilder'),
+      // 'navigationbuilder/builder/new'                                  => array('action' => 'navigationBuilder/builder/createEditBuilder'),
+      'navigationbuilder/navnode/new'                                 => array('action' => 'navigationBuilder/navnode/createEditNavnode'),
+      'navigationbuilder/navnode/(?P<navnodeId>\d+)'                  => array('action' => 'navigationBuilder/navnode/createEditNavnode'),
+      'navigationbuilder/navnode/(?P<navnodeId>\d+)/edit'             => array('action' => 'navigationBuilder/navnode/createEditNavnode'),
+      'navigationbuilder/navnodes'                                    => array('action' => 'navigationBuilder/navnode/navnodesIndex'),
       'navigationbuilder/builder/(?P<navigationId>\d+)'               => array('action' => 'navigationBuilder/builder/createEditBuilder'),
       'navigationbuilder/builder/(?P<navigationId>\d+)/edit'          => array('action' => 'navigationBuilder/builder/createEditBuilder'),
-      'navigationbuilder/navigation'                        					=> array('action' => 'navigationBuilder/navigation/navigationsIndex'),
-      'navigationbuilder/navigation/new'                        			=> array('action' => 'navigationBuilder/navigation/createEditNavigation'),
+      'navigationbuilder/navigation'                                  => array('action' => 'navigationBuilder/navigation/navigationsIndex'),
+      'navigationbuilder/navigation/new'                              => array('action' => 'navigationBuilder/navigation/createEditNavigation'),
       'navigationbuilder/navigation/(?P<navigationId>\d+)'            => array('action' => 'navigationBuilder/navigation/createEditNavigation'),
       'navigationbuilder/navigation/(?P<navigationId>\d+)/edit'       => array('action' => 'navigationBuilder/navigation/createEditNavigation'),
     );

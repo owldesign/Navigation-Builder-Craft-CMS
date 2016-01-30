@@ -23,9 +23,48 @@
 	<div class="item first" data-position="left" data-colspan="2">
 		<div class="pane">
 			<p>Navigation ID: {{ navigationId }}</p>
+      <button id="toHierarchy">WORK ME</button>
+
+      <div id="toHierarchyOutput"></div>
+
 
 			<div id="node-container">
-				<p>Test Node</p>
+				
+        <ol class="sortable ui-sortable mjs-nestedSortable-branch mjs-nestedSortable-expanded">
+
+          <li style="display: list-item;" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded" id="menuItem_2" data-foo="bar" data-name="Homepage">
+            <div class="menuDiv">
+             <span title="Click to show/hide children" class="disclose ui-icon ui-icon-minusthick"><span></span></span>
+             <span title="Click to show/hide item editor" data-id="2" class="expandEditor ui-icon ui-icon-triangle-1-n"><span></span></span>
+             
+             <span>
+              <span data-id="2" class="itemTitle">a</span>
+              <span title="Click to delete item." data-id="2" class="deleteMenu ui-icon ui-icon-closethick"><span></span></span>
+             </span>
+
+             <div id="menuEdit2" class="menuEdit not-visible">
+               <p>Content or form, or nothing here. Whatever you want.</p>
+             </div>
+            </div>
+          </li>
+
+          <li style="display: list-item;" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded" id="menuItem_2" data-foo="bar" data-name="Homepage">
+            <div class="menuDiv">
+             <span title="Click to show/hide children" class="disclose ui-icon ui-icon-minusthick"><span></span></span>
+             <span title="Click to show/hide item editor" data-id="2" class="expandEditor ui-icon ui-icon-triangle-1-n"><span></span></span>
+             
+             <span>
+              <span data-id="2" class="itemTitle">a</span>
+              <span title="Click to delete item." data-id="2" class="deleteMenu ui-icon ui-icon-closethick"><span></span></span>
+             </span>
+
+             <div id="menuEdit2" class="menuEdit not-visible">
+               <p>Content or form, or nothing here. Whatever you want.</p>
+             </div>
+            </div>
+          </li>
+
+        </ol>
 			</div>
 		</div>
 	</div>

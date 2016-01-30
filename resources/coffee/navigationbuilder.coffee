@@ -2,6 +2,77 @@
     # Craft.cp.displayNotice('sup');
 do ->
 
+  ns = $('.sortable').nestedSortable(
+    forcePlaceholderSize: true
+    handle: 'div'
+    helper: 'clone'
+    items: 'li'
+    opacity: .6
+    placeholder: 'placeholder'
+    revert: 250
+    tabSize: 25
+    tolerance: 'pointer'
+    toleranceElement: '> div'
+    maxLevels: 2
+    isTree: true
+    expandOnHover: 700
+    startCollapsed: false
+    change: ->
+      console.log 'Relocated item'
+  )
+  $('.expandEditor').attr 'title', 'Click to show/hide item editor'
+  $('.disclose').attr 'title', 'Click to show/hide children'
+  $('.deleteMenu').attr 'title', 'Click to delete item.'
+  $('.disclose').on 'click', ->
+    $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass 'mjs-nestedSortable-expanded'
+    $(this).toggleClass('ui-icon-plusthick').toggleClass 'ui-icon-minusthick'
+  $('.expandEditor, .itemTitle').click ->
+    id = $(this).attr('data-id')
+    $('#menuEdit' + id).toggle()
+    $(this).toggleClass('ui-icon-triangle-1-n').toggleClass 'ui-icon-triangle-1-s'
+  $('.deleteMenu').click ->
+    id = $(this).attr('data-id')
+    $('#menuItem_' + id).remove()
+  # $('#serialize').click ->
+  #   serialized = $('ol.sortable').nestedSortable('serialize')
+  #   $('#serializeOutput').text serialized + '\n\n'
+  $('#toHierarchy').click (e) ->
+    hiered = $('ol.sortable').nestedSortable('toHierarchy', startDepthCount: 0)
+    console.log hiered
+    # hiered = dump(hiered)
+    # if typeof $('#toHierarchyOutput')[0].textContent != 'undefined' then ($('#toHierarchyOutput')[0].textContent = hiered) else ($('#toHierarchyOutput')[0].innerText = hiered)
+  # $('#toArray').click (e) ->
+  #   arraied = $('ol.sortable').nestedSortable('toArray', startDepthCount: 0)
+  #   arraied = dump(arraied)
+  #   if typeof $('#toArrayOutput')[0].textContent != 'undefined' then ($('#toArrayOutput')[0].textContent = arraied) else ($('#toArrayOutput')[0].innerText = arraied)
+
+
+
+  # dump = (arr, level) ->
+  #   dumped_text = ''
+  #   if !level
+  #     level = 0
+  #   #The padding given at the beginning of the line.
+  #   level_padding = ''
+  #   j = 0
+  #   while j < level + 1
+  #     level_padding += '    '
+  #     j++
+  #   if typeof arr == 'object'
+  #     #Array/Hashes/Objects
+  #     for item of arr
+  #       value = arr[item]
+  #       if typeof value == 'object'
+  #         #If it is an array,
+  #         dumped_text += level_padding + '\'' + item + '\' ...\n'
+  #         dumped_text += dump(value, level + 1)
+  #       else
+  #         dumped_text += level_padding + '\'' + item + '\' => "' + value + '"\n'
+  #   else
+  #     #Strings/Chars/Numbers etc.
+  #     dumped_text = '===>' + arr + '<===(' + typeof arr + ')'
+  #   dumped_text
+
   $form = $('<form id="newNodeModalBox" class="modal fitted"/>')
   $body = $('<div class="body"/>').appendTo($form)
   $modalContainer = $('<div class="modal-container"/>').appendTo($body)

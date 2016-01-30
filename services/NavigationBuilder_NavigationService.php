@@ -8,7 +8,7 @@ class NavigationBuilder_NavigationService extends BaseApplicationComponent
 	private $_fetchedAllNavigations = false;
 
 	/**
-	 * Get All Form
+	 * Get All Navigations
 	 *
 	 */
 	public function getAllNavigations($indexBy = null)
@@ -34,7 +34,7 @@ class NavigationBuilder_NavigationService extends BaseApplicationComponent
 
 
 	/**
-	 * Get Form By Handle
+	 * Get Navigation By Handle
 	 *
 	 */
 	public function getNavigationByHandle($navigationHandle)
@@ -79,12 +79,10 @@ class NavigationBuilder_NavigationService extends BaseApplicationComponent
 	    if (!$navigationRecord) {
 	      throw new Exception(Craft::t('No navigation exists with the ID “{id}”', array('id' => $navigation->id)));
 	    }
-
-	    $oldForm = NavigationBuilder_NavigationModel::populateModel($navigationRecord);
-	    $isNewForm = false;
+	    $isNewNavigation = false;
 	  } else {
 	    $navigationRecord = new NavigationBuilder_NavigationRecord();
-	    $isNewForm = true;
+	    $isNewNavigation = true;
 	  }
 
 	  $navigationRecord->name               = $navigation->name;

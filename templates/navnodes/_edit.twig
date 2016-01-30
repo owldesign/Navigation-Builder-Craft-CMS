@@ -1,90 +1,87 @@
 {% extends "_layouts/cp" %}
 {% import "_includes/forms" as forms %}
 
-{% set calendarHandle = calendar.handle %}
+{% set bodyClass = 'navigationbuilder nb-edit' %}
+{% set pageSlug = craft.request.lastSegment %}
 
+{% if pageSlug == 'edit' %}
+  {% set page = 'Edit Navnode' %}
+{% else %}
+  {% set page = 'New Navnode' %}
+{% endif %}
 
-{% macro dateTimeField(event, attribute, label) %}
-
-	{% import "_includes/forms" as forms %}
-
-	{% set input %}
-		{{ forms.date({
-			id:        attribute,
-			name:      attribute,
-			value:     event.getAttribute(attribute),
-			errors:    event.getErrors(attribute),
-		}) }}
-
-		{{ forms.time({
-			id:        attribute,
-			name:      attribute,
-			value:     event.getAttribute(attribute),
-			errors:    event.getErrors(attribute),
-		}) }}
-	{% endset %}
-
-	{{ forms.field({
-		id:       attribute,
-		label:    label,
-		first:    (attribute == 'startDate'),
-		required: true
-	}, input) }}
-
-{% endmacro %}
-
-{% from _self import dateTimeField %}
+{% block pageHeader %}
+  {% include 'navigationbuilder/partials/header' %}
+  {{ parent() }}
+  <div id="extra-headers"><div class="buttons right"><div class="btngroup"><a href="{{ url('navigationbuilder/navnode/new') }}" class="btn submit add icon"><span>{{ "Create New Navnode"|t }}</span></a></div></div></div>
+{% endblock %}
 
 {% block content %}
-	<form id="event-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
-		<input type="hidden" name="action" value="events/saveEvent">
-		<input type="hidden" name="redirect" value="events">
-		<input type="hidden" name="calendarId" value="{{ calendar.id }}">
-		{% if event.id %}<input type="hidden" name="eventId" value="{{ event.id }}">{% endif %}
-		{% if craft.isLocalized() %}<input type="hidden" name="locale" value="{{ event.locale }}">{% endif %}
-		{{ getCsrfInput() }}
+	
+<section class="pane">
 
+	{{ navnode.id }}
+  <form method="post" accept-charset="UTF-8">
+    <input type="hidden" name="action" value="navigationBuilder/navnode/saveNavnode">
+    <input type="hidden" name="redirect" value="navigationbuilder/navnodes">
+
+    {% if navnode.id %}<input type="hidden" name="novnodeId" value="{{ navnode.id }}">{% endif %}
+		
 		{{ forms.textField({
-			label: "Title"|t,
-			id: 'title',
-			name: 'title',
-			value: event.title,
-			errors: event.getErrors('title'),
-			first: true,
-			autofocus: true,
-			required: true
+		  first: true,
+		  label: "Navigation Name"|t,
+		  instructions: "Give this navnode a name"|t,
+		  id: 'name',
+		  name: 'name',
+		  value: navnode.name,
+		  errors: navnode.getErrors('name'),
+		  autofocus: true,
+		  required: true,
+		  size: 50,
+		  translatable: true
 		}) }}
 
-		{{ dateTimeField(event, 'startDate', "Start Date"|t, true) }}
-		{{ dateTimeField(event, 'endDate', "End Date"|t, false) }}
+		{{ forms.textField({
+		  label: "Handle"|t,
+		  instructions: "Navigation field handle name, must be unique"|t,
+		  id: 'handle',
+		  class: 'code',
+		  name: 'handle',
+		  value: navnode.handle,
+		  size: 50,
+		  errors: navnode.getErrors('handle'),
+		  required: true
+		}) }}
 
-		<div>
-			{% for tab in calendar.getFieldLayout().getTabs() %}
-				<div id="tab{{ loop.index }}"{% if not loop.first %} class="hidden"{% endif %}>
-					{% include "_includes/fields" with {
-						fields: tab.getFields(),
-						element: event
-					} only %}
-				</div>
-			{% endfor %}
-		</div>
+		{% includeCssResource "lib/redactor/redactor.css" %}
+		{% includeJsResource "lib/redactor/redactor.js" %}
+		{{ forms.textareaField({
+		  label: "Description"|t,
+		  instructions: "Short description about your navnode"|t,
+		  id: 'description',
+		  class: 'description',
+		  name: 'description',
+		  value: (navnode.description is defined ? navnode.description : null),
+		  errors: navnode.getErrors('description'),
+		  required: false
+		}) }}
+
+		{# Errors #}
+		{%- set errors = (errors is defined ? errors : null) -%}
+		{% if errors %}
+		  {% include "_includes/forms/errorList" with { errors: errors } %}
+		{% endif %}
 
 		<div class="buttons">
-			<div class="btngroup submit first">
-				<input type="submit" class="btn submit" value="{{ 'Save'|t }}">
-
-				<div class="btn submit menubtn"></div>
-				<div class="menu">
-					<ul>
-						<li><a class="formsubmit" data-redirect="{{ continueEditingUrl }}">{{ "Save and continue editing"|t }}</a></li>
-						<li><a class="formsubmit" data-redirect="events/{{ calendarHandle }}/new">{{ "Save and add another"|t }}</a></li>
-					</ul>
-				</div>
-			</div>
-
-			<input type="button" class="btn formsubmit" value="{{ 'Delete'|t }}" data-action="events/deleteEvent"
-				data-confirm="{{ 'Are you sure you want to delete this event?'|t }}"
-				data-redirect="events">
+		  <input type="submit" class="btn submit" value="{{ 'Save Navnode'|t }}">
 		</div>
+
 	</form>
+</section>
+
+{% set newFormJs %}
+  {% if not navnode.handle %}new Craft.HandleGenerator('#name', '#handle');{% endif %}
+  $('#description').redactor();
+{% endset %}
+{% includeJs newFormJs %}
 {% endblock %}

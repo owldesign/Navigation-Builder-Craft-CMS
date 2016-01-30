@@ -27,13 +27,12 @@ class NavigationBuilder_NavigationRecord extends BaseRecord
   // //======================================================================
   // // Define Relationships
   // //======================================================================
-  // public function defineRelations()
-  // {
-  //   return array(
-  //     'fieldLayout'   => array(static::BELONGS_TO, 'FieldLayoutRecord', 'onDelete' => static::SET_NULL),
-  //     'entries'       => array(static::HAS_MANY, 'FormBuilder2_EntryRecord', 'entrieId'),
-  //   );
-  // }
+  public function defineRelations()
+  {
+    return array(
+      'navnodes'       => array(static::HAS_MANY, 'NavigationBuilder_NavnodeRecord', 'navnode'),
+    );
+  }
 
   //======================================================================
   // Define Indexes

@@ -17,41 +17,44 @@ class NavigationBuilder_NavnodeRecord extends BaseRecord
   protected function defineAttributes()
   {
     return array(
-      'startDate' => array(AttributeType::DateTime, 'required' => true),
-      'endDate'   => array(AttributeType::DateTime, 'required' => true),
+      'name'         => array(AttributeType::Name, 'required' => true),
+      'handle'       => array(AttributeType::Handle, 'required' => true),
+      'description'  => AttributeType::String,
+      'customUrl'    => AttributeType::String,
+      'entryUrl'     => AttributeType::String
     );
   }
 
-  //======================================================================
-  // Define Relationships
-  //======================================================================
+  // //======================================================================
+  // // Define Relationships
+  // //======================================================================
   public function defineRelations()
   {
     return array(
-      'element'  => array(static::BELONGS_TO, 'ElementRecord', 'id', 'required' => true, 'onDelete' => static::CASCADE),
-      'navigation' => array(static::BELONGS_TO, 'NavigationBuilder_NavigationRecord', 'required' => true, 'onDelete' => static::CASCADE),
+      'navigations'   => array(static::BELONGS_TO, 'NavigationBuilder_NavigationRecord', 'onDelete' => static::SET_NULL),
+      // 'navigations' => array(static::HAS_MANY, 'NavigationBuilder_NavigationRecord', 'navigationId'),
     );
   }
 
   //======================================================================
   // Define Indexes
   //======================================================================
-  // public function defineIndexes()
-  // {
-  //   return array(
-  //     array('columns' => array('id'), 'unique' => true),
-  //     array('columns' => array('name'), 'unique' => true),
-  //     array('columns' => array('handle'), 'unique' => true),
-  //   );
-  // }
+  public function defineIndexes()
+  {
+    return array(
+      array('columns' => array('id'), 'unique' => true),
+      array('columns' => array('name'), 'unique' => true),
+      array('columns' => array('handle'), 'unique' => true),
+    );
+  }
 
   //======================================================================
   // Scopes
   //======================================================================
-  // public function scopes()
-  // {
-  //   return array(
-  //     'ordered' => array('order' => 'id'),
-  //   );
-  // }
+  public function scopes()
+  {
+    return array(
+      'ordered' => array('order' => 'id'),
+    );
+  }
 }

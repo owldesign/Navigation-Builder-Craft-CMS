@@ -8,7 +8,7 @@ class NavigationBuilder_NavigationController extends BaseController
 
 
 	/**
-	 * Get All Forms
+	 * Get All Navigations
 	 *
 	 */
 	public function actionNavigationsIndex()

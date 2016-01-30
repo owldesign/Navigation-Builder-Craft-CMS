@@ -1,74 +1,40 @@
 <?php
 namespace Craft;
 
-class NavigationBuilder_NavnodeModel extends BaseElementModel
+class NavigationBuilder_NavnodeModel extends BaseModel
 {
- 
-  protected $elementType = 'NavigationBuilder_Navnode';
+  /**
+   * Name to string
+   *
+   */
+  function __toString()
+  {
+    return Craft::t($this->name);
+  }
 
   /**
-   * @access protected
-   * @return array
+   * Define Attributes
+   *
    */
   protected function defineAttributes()
   {
-    return array_merge(parent::defineAttributes(), array(
-      'navigationId' => AttributeType::Number,
-      'startDate'  => AttributeType::DateTime,
-      'endDate'    => AttributeType::DateTime,
-    ));
+    return array(
+      'id'              => AttributeType::Number,
+      'name'            => array(AttributeType::Name, 'required' => true),
+      'handle'          => array(AttributeType::Handle, 'required' => true),
+      'description'     => AttributeType::String,
+      'customUrl'       => AttributeType::String,
+      'entryUrl'        => AttributeType::String
+    );
   }
 
-  /**
-   * Returns whether the current user can edit the element.
-   *
-   * @return bool
-   */
-  public function isEditable()
-  {
-    return true;
-  }
-
-  /**
-   * Returns the element's CP edit URL.
-   *
-   * @return string|false
-   */
-  public function getCpEditUrl()
-  {
-    $navigation = $this->getNativation();
-    if ($navigation)
-    {
-      return UrlHelper::getCpUrl('navigation/'.$navigation->handle.'/'.$this->id);
-    }
-  }
-
-  /**
-   * Returns the field layout used by this element.
-   *
-   * @return FieldLayoutModel|null
-   */
-  public function getFieldLayout()
-  {
-    $navigation = $this->getNavigation();
-    if ($navigation)
-    {
-      return $navigation->getFieldLayout();
-    }
-  }
-
-  /**
-   * Returns the event's calendar.
-   *
-   * @return Events_CalendarModel|null
-   */
-  public function getNavigation()
-  {
-    if ($this->navigationId)
-    {
-      return craft()->navigationBuilder_navigation->getNavigationById($this->navigationId);
-    }
-  }
-
+  // /**
+  //  * Behaviors
+  //  *
+  //  */
+  // public function behaviors()
+  // {
+  //   return array();
+  // }
 
 }

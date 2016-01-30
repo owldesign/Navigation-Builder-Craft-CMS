@@ -1,30 +1,65 @@
-{% extends "_layouts/elementindex" %}
-{% set title = "Nav Nodes"|t %}
-{% set elementType = 'NavigationBuilder_Navnode' %}
+{% extends "_layouts/cp" %}
 
-{# {% set tabs = {
-	events:    { label: "Events"|t, url: url('events') },
-	calendars: { label: "Calendars"|t, url: url('events/calendars') }
-} %} #}
+{% set bodyClass = 'navbuilder' %}
+{% set title = pageTitle %}
 
-
-{% block sidebar %}
-	{% if navigations|length %}
-		<div class="buttons">
-			{% if navigations|length > 1 %}
-				<div class="btn submit menubtn add icon">{{ "New Event"|t }}</div>
-				<div class="menu">
-					<ul>
-						{% for navigation in navigations %}
-							<li><a href="{{ url('navigation/'~navigation.handle~'/new') }}">{{ navigation.name|t }}</a></li>
-						{% endfor %}
-					</ul>
-				</div>
-			{% else %}
-				<a class="btn submit add icon" href="{{ url('navigation/'~navigations[0].handle~'/new') }}">{{ "New Navigation"|t }}</a>
-			{% endif %}
-		</div>
-	{% endif %}
-
-	{{ parent() }}
+{% block pageHeader %}
+  {% include 'navigationbuilder/partials/header' %}
+  {{ parent() }}
+  <div id="extra-headers"><div class="buttons right"><div class="btngroup"><a href="{{ url('navigationbuilder/navnode/new') }}" class="btn submit add icon"><span>{{ "Create New Navnode"|t }}</span></a></div></div></div>
 {% endblock %}
+
+{% block content %}
+<section class="nav-list">
+	{% if navnodes|length %}
+	<table class="data fullwidth" id="navnodes-list" data-max-levels="3">
+	  <thead>
+	    <tr>
+	      <th scope="col">{{ "Name"|t }}</th>
+	      <th scope="col">{{ "Handle"|t }}</th>
+	      <th scope="col">{{ "Description"|t }}</th>
+	      <th scope="col">{{ "Action"|t }}</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	  	{% for navnode in navnodes %}
+	    <tr data-id="{{ navnode.id }}" data-name="{{ navnode.name }}" class="table-rows">
+	      <td data-title="{{ "Name"|t }}" class="name"><a href="{{ url('navigationbuilder/navnode/' ~ navnode.id ~ '/edit') }}">{{ navnode.name }}</a></td>
+	      <td data-title="{{ "Handle"|t }}" class="handle"><code>{{ navnode.handle }}</code></td>
+	      <td data-title="{{ "Description"|t }}" class="description">{{ navnode.description |raw }}</td>
+	      <td data-title="{{ "Action"|t }}" class="action">
+	        <span data-tooltip="Copy {{ navnode.handle }}"><svg class="icon copy" data-clipboard-text="{{ navnode.handle }}"><use xlink:href="#icon-copy" class="icon-copy"/></svg></span>
+	        <a href="#" class="delete-navnode delete" title="{{ navnode.name }}" role="button" data-tooltip="Delete {{ navnode.name }}">
+	          <svg class="icon"><use xlink:href="#icon-trash" class="icon-trash"/></svg>
+	        </a>
+	        <a href="{{ url('navigationbuilder/builder/' ~ navnode.id ~'/edit') }}" class="build-navnode build" title="{{ navnode.name }}" role="button" data-tooltip="Build {{ navnode.name }}">
+	          <svg class="icon"><use xlink:href="#icon-pencil" class="icon-pencil"/></svg>
+	        </a>
+	      </td>
+	    </tr>
+	  	{% endfor %}
+	  </tbody>
+	  <tfoot class="move">
+	  	<tr><td></td></tr>
+	  </tfoot>
+	</table>
+	{% else %}
+	<div class="pane" id="nonavnodes">
+		<p>You don't have any navnodes, please make some</p>
+	</div>
+	{% endif %}
+</section>
+
+{% endblock %}
+
+{% set js %}
+  var adminTable = new Craft.AdminTable({
+    tableSelector: '#navnodes-list',
+    noObjectsSelector: '#nonavnodes',
+    newObjectBtnSelector: '#navnodecontainer',
+    deleteAction: 'navigationBuilder/navnode/deleteNavnode',
+    confirmDeleteMessage: '{{ "Are you sure you want to delete “{name}”?"|t }}'
+  });
+{% endset %}
+{% includeJs js %}
